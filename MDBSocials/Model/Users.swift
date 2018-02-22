@@ -14,6 +14,7 @@ class Users {
     var email: String?
     var password: String?
     var id: String?
+    var username: String?
     
     init(id: String, userDict: [String:Any]?) {
         self.id = id
@@ -21,13 +22,15 @@ class Users {
             if let name = userDict!["name"] as? String {
                 self.name = name
             }
+            if let username = userDict!["username"] as? String {
+                self.name = username
+            }
             if let password = userDict!["password"] as? String {
                 self.password = password
             }
             if let email = userDict!["email"] as? String {
                 self.email = email
             }
-            
         }
     }
     

@@ -19,7 +19,6 @@ class FeedVC: UIViewController {
     var currentUser: Users?
     var navBar: UINavigationBar!
     let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
-
     
     let samplePost = Post()
     
@@ -90,11 +89,11 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
-        return CGSize(width: postView.bounds.width - 20, height: 100)
+        return CGSize(width: postView.bounds.width - 20, height: 150)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width - 20, height: 100)
+        return CGSize(width: UIScreen.main.bounds.width - 20, height: 150)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

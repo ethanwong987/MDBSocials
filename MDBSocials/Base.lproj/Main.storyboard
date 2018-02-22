@@ -77,6 +77,7 @@
                     <connections>
                         <segue destination="m8A-d7-yvA" kind="show" identifier="toDetails" id="AA3-Mc-eL5"/>
                         <segue destination="zdq-Fn-Ehy" kind="presentation" identifier="toNewSocial" id="wVI-yh-Aen"/>
+                        <segue destination="zdq-Fn-Ehy" kind="show" identifier="toNewSocial" id="wxE-la-2d9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BbE-Ug-zbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -115,6 +116,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="wxE-la-2d9"/>
         <segue reference="gV1-IO-S9z"/>
     </inferredMetricsTieBreakers>
 </document>

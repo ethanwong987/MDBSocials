@@ -1,9 +1,9 @@
 //
 //  Post.swift
-//  FirebaseDemoMaster
+//  MDBSocials
 //
-//  Created by Vidya Ravikumar on 9/22/17.
-//  Copyright © 2017 Vidya Ravikumar. All rights reserved.
+//  Created by Ethan Wong on 2/20/18.
+//  Copyright © 2018 Ethan Wong. All rights reserved.
 //
 
 import Foundation
@@ -24,6 +24,9 @@ class Post {
     init(id: String, postDict: [String:Any]?) {
         self.id = id
         if postDict != nil {
+            if let numInterested = postDict!["numInterested"] as? String {
+                self.numInterested = numInterested
+            }
             if let text = postDict!["text"] as? String {
                 self.text = text
             }

@@ -8,10 +8,10 @@
 
 //
 //  PostCollectionViewCell.swift
-//  FirebaseDemoMaster
+//  MDBSocials
 //
-//  Created by Vidya Ravikumar on 9/22/17.
-//  Copyright © 2017 Vidya Ravikumar. All rights reserved.
+//  Created by Ethan Wong on 9/22/17.
+//  Copyright © 2018 Ethan Wong. All rights reserved.
 //
 
 import UIKit
