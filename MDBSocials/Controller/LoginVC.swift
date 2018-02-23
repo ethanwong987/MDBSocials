@@ -25,12 +25,23 @@ class LoginVC: UIViewController {
     var backgroundLoop = 0
     
     override func viewDidLoad() {
+        checkIfUserIsSignedIn()
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         setUpLoginUI()
         animateBackgroundColour()
         createButtons()
         createTitle()
     }
+    
+    private func checkIfUserIsSignedIn() {
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if user != nil {
+                self.performSegue(withIdentifier: "toFeed", sender: self)
+        }
+    }
+}
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -129,10 +140,26 @@ class LoginVC: UIViewController {
     @objc func logInToFeed() {
         let email = emailText.text!
         let password = passWord.text!
-        UserAuth.logIn(email:email, password: password, withBlock: {(user) in
-            self.performSegue(withIdentifier: "toFeedFromLogin", sender: self)
-        })
+        emailText.text = ""
+        passWord.text = ""
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if error == nil {
+                self.performSegue(withIdentifier: "toFeed", sender: self)}
+            else {
+                let alert = self.createAlert(warning: error!.localizedDescription)
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+        }
+        
     }
+    
+    func createAlert(warning: String) -> UIAlertController {
+        let alert = UIAlertController(title: "Warning:", message: warning, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        return alert
+    }
+    
     
     @objc func toSignUp() {
         performSegue(withIdentifier: "toSignUp", sender: self)

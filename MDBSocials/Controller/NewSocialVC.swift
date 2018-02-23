@@ -8,8 +8,10 @@
 
 import UIKit
 import SkyFloatingLabelTextField
+import Firebase
 
 class NewSocialVC: UIViewController {
+    var eventName: SkyFloatingLabelTextField!
     var posterName: SkyFloatingLabelTextField!
     var enterDesc: SkyFloatingLabelTextField!
     var datePickerText: SkyFloatingLabelTextField!
@@ -35,7 +37,21 @@ class NewSocialVC: UIViewController {
         createDescLabel()
         createDatePicker()
         createTimePicker()
+        createEventLabel()
         createButtons()
+    }
+    
+    func createEventLabel() {
+        let vfw = view.frame.width
+        let vfh = view.frame.height
+        eventName = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.3, width: vfw - 60, height: 45))
+        eventName.lineColor = .orange
+        eventName.selectedTitleColor = .orange
+        eventName.selectedLineColor = .orange
+        eventName.tintColor = .orange
+        eventName.placeholder = "Event Name"
+        eventName.placeholderColor = .orange
+        view.addSubview(eventName)
     }
     
     func createNameLabel() {
@@ -152,12 +168,12 @@ class NewSocialVC: UIViewController {
         let vfh = view.frame.height
         
         view.backgroundColor = MDBColor
-        borderBox = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.38, width: vfw-30, height: vfh * 0.55))
+        borderBox = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.3, width: vfw-30, height: vfh * 0.65))
         borderBox.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         borderBox.layer.masksToBounds = true
         borderBox.layer.cornerRadius = 10
         
-        eventPic = UIImageView(frame: CGRect(x: vfw*0.04, y: vfh*0.12, width: vfw-30, height: vfh*0.2))
+        eventPic = UIImageView(frame: CGRect(x: vfw*0.04, y: vfh*0.05, width: vfw-30, height: vfh*0.2))
         selectFromLibraryButton = UIButton(frame: eventPic.frame)
         selectFromLibraryButton.setTitle("SELECT \n AN IMAGE", for: .normal)
         selectFromLibraryButton.titleLabel?.numberOfLines = 0
@@ -190,15 +206,15 @@ class NewSocialVC: UIViewController {
         signUpButton = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.81, width: vfw - 50, height: 40))
         signUpButton.setTitle("Create Post", for: .normal)
         signUpButton.backgroundColor = .orange
-        signUpButton.addTarget(self, action: #selector(toFeed), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(createPostToFeed), for: .touchUpInside)
         signUpButton.layer.cornerRadius = 10
         
         backToLogin = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.87, width: vfw - 50, height: 40))
         backToLogin.setTitle("Back To Feed", for: .normal)
         backToLogin.setTitleColor(MDBColor, for: .normal)
-        backToLogin.addTarget(self, action: #selector(toLogin), for: .touchUpInside)
+        backToLogin.addTarget(self, action: #selector(backToFeed), for: .touchUpInside)
         
-        takePictureButton = UIButton(frame: CGRect(x: vfw*0.45, y: vfh*0.32, width: vfw*0.1, height: vfh*0.06))
+        takePictureButton = UIButton(frame: CGRect(x: vfw*0.45, y: vfh*0.25, width: vfw*0.1, height: vfh*0.06))
         takePictureButton.setImage(UIImage(named: "camera"), for: .normal)
         takePictureButton.addTarget(self, action: #selector(selectPictureFromCamera), for: .touchUpInside)
         
@@ -213,12 +229,47 @@ class NewSocialVC: UIViewController {
         picker.sourceType = .camera
         self.present(picker, animated: true, completion: nil)
     }
-    
-    @objc func toFeed() {
-        performSegue(withIdentifier: "toFeed", sender: self)
+
+    @objc func createPostToFeed() {
+        let postsRef = Database.database().reference().child("Posts")
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        let imageData = UIImageJPEGRepresentation(eventPic.image!, 0.7)
+    postsRef.child("Users" ).child((Auth.auth().currentUser?.uid)!).child("name").observeSingleEvent(of: .value, with: {(snapshot) in
+        let date = self.datePickerText.text!
+        let time = self.timePickerText.text!
+        let posterId = self.posterName.text!
+        let postText = self.enterDesc.text!
+        let poster = self.posterName.text!
+        let numInterested = 0
+        let postTitle = self.eventName.text!
+        
+        var newPost = ["postTitle":postTitle, "date":date, "time":time, "numInterested": numInterested, "text": postText, "poster": poster, "imageUrl": "", "posterId": posterId] as [String : Any]
+        let key = postsRef.childByAutoId().key
+        let childUpdates = ["/\(key)/": newPost]
+        let storage = Storage.storage().reference().child("Posts").child(key)
+        storage.putData(imageData!, metadata: metadata, completion: { (metadata, error) in
+            if error == nil {
+                let imageUrl = metadata?.downloadURL
+                newPost["imageUrl"] = imageUrl
+                postsRef.updateChildValues(childUpdates)
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                let alert = self.createAlert(warning: error!.localizedDescription)
+                self.present(alert, animated: true, completion: nil)
+            }
+        })
+        })
     }
     
-    @objc func toLogin() {
+    func createAlert(warning: String) -> UIAlertController {
+        let alert = UIAlertController(title: "Warning:", message: warning, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        return alert
+    }
+    
+    
+    @objc func backToFeed() {
         self.dismiss(animated: true, completion: nil)
     }
 }

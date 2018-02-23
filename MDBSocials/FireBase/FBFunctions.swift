@@ -36,18 +36,9 @@ class FBFunctions {
             
         })
     }
-    
-    static func createNewPost(postText: String, poster: String, imageUrl: String, posterId: String) {
-        let postsRef = Database.database().reference().child("Posts")
-        let newPost = ["text": postText, "poster": poster, "imageUrl": imageUrl, "posterId": posterId] as [String : Any]
-        let key = postsRef.childByAutoId().key
-        let childUpdates = ["/\(key)/": newPost]
-        postsRef.updateChildValues(childUpdates)
-    }
-    
-    static func createNewUser(id: String, name: String, email: String, imageUrl: String) {
+    static func createNewUser(id: String, name: String, email: String) {
         let usersRef = Database.database().reference().child("Users")
-        let newUser = ["name": name, "email": email, "imageUrl": imageUrl]
+        let newUser = ["name": name, "email": email]
         let childUpdates = ["/\(id)/": newUser]
         usersRef.updateChildValues(childUpdates)
     }

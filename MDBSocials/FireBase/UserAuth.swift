@@ -31,12 +31,4 @@ class UserAuth {
             print ("Error signing out: %@", signOutError)
         }
     }
-
-    static func createUser(email: String, password: String, imageData: Data, withBlock: @escaping (String, String) -> ()) {
-        Auth.auth().createUser(withEmail: email, password: password, completion: { (user: User?, error) in
-            if error == nil {
-                
-            }
-        })
-    }
 }

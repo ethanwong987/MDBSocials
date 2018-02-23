@@ -20,6 +20,9 @@ class FeedViewCell: UICollectionViewCell {
     
     var profileImage: UIImageView!
     var posterText: UILabel!
+    var descText: UILabel!
+    var dateText: UILabel!
+    var timeText: UILabel!
     var postText: UILabel!
     var numInterested: UILabel!
     let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
@@ -34,6 +37,8 @@ class FeedViewCell: UICollectionViewCell {
         setUpNumInterested()
         setupEventPoster()
         setupEventImage()
+        createDateText()
+        createTimeText()
 
     }
     
@@ -50,13 +55,33 @@ class FeedViewCell: UICollectionViewCell {
         let sfw = self.frame.width
         let sfh = self.frame.height
         
-        numInterested = UILabel(frame: CGRect(x: 10, y: 72, width: sfw, height: 20))
-        numInterested.text = "Interested: 7"
+        numInterested = UILabel(frame: CGRect(x: 10, y: 60, width: sfw, height: 20))
         numInterested.font = UIFont(name: "Helvetica Neue", size: 17)
         numInterested.textColor = .green
         
         addSubview(numInterested)
+    }
+    
+    func createDateText(){
+        let sfw = self.frame.width
+        let sfh = self.frame.height
         
+        dateText = UILabel(frame: CGRect(x: 10, y: 80, width: sfw, height: 30))
+        dateText.font = UIFont(name: "Helvetica Neue", size: 17)
+        dateText.textColor = .black
+        
+        addSubview(dateText)
+        
+    }
+    func createTimeText() {
+        let sfw = self.frame.width
+        let sfh = self.frame.height
+        
+        timeText = UILabel(frame: CGRect(x: 10, y: 100, width: sfw, height: 30))
+        timeText.font = UIFont(name: "Helvetica Neue", size: 17)
+        timeText.textColor = .black
+        
+        addSubview(timeText)
     }
     
     func setupEventText() {

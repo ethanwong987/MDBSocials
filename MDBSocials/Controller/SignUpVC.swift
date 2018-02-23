@@ -8,13 +8,14 @@
 
 import UIKit
 import SkyFloatingLabelTextField
+import Firebase
 
 class SignUpVC: UIViewController {
     var fullname: SkyFloatingLabelTextField!
     var userName: SkyFloatingLabelTextField!
     var passWord: SkyFloatingLabelTextField!
     var confirmPwd: SkyFloatingLabelTextField!
-    var email: SkyFloatingLabelTextField!
+    var emailText: SkyFloatingLabelTextField!
     var signUpTitle: UILabel!
     var borderBox: UILabel!
     var signUpButton: UIButton!
@@ -75,14 +76,14 @@ class SignUpVC: UIViewController {
     func createEmailLabel() {
         let vfw = view.frame.width
         let vfh = view.frame.height
-        email = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.6, width: vfw - 60, height: 45))
-        email.lineColor = .orange
-        email.selectedTitleColor = .orange
-        email.selectedLineColor = .orange
-        email.tintColor = .orange
-        email.placeholder = "Email"
-        email.placeholderColor = .orange
-        view.addSubview(email)
+        emailText = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.6, width: vfw - 60, height: 45))
+        emailText.lineColor = .orange
+        emailText.selectedTitleColor = .orange
+        emailText.selectedLineColor = .orange
+        emailText.tintColor = .orange
+        emailText.placeholder = "Email"
+        emailText.placeholderColor = .orange
+        view.addSubview(emailText)
     }
     
     func setUpUI() {
@@ -114,7 +115,7 @@ class SignUpVC: UIViewController {
         signUpButton = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.81, width: vfw - 50, height: 40))
         signUpButton.setTitle("Create Account", for: .normal)
         signUpButton.backgroundColor = .orange
-        signUpButton.addTarget(self, action: #selector(toFeed), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signUpToFeed), for: .touchUpInside)
         signUpButton.layer.cornerRadius = 10
         
         backToLogin = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.87, width: vfw - 50, height: 40))
@@ -126,8 +127,29 @@ class SignUpVC: UIViewController {
         view.addSubview(signUpButton)
     }
     
-    @objc func toFeed() {
-        performSegue(withIdentifier: "toFeed", sender: self)
+    @objc func signUpToFeed() {
+        let email = emailText.text!
+        let password = passWord.text!
+        let name = fullname.text!
+        let username = userName.text!
+        
+        Auth.auth().createUser(withEmail: email, password: password, completion:{ (user, error) in if error == nil {
+                let ref = Database.database().reference()
+                let uid = (user?.uid)!
+                let userRef = ref.child("Users").child(uid)
+            userRef.setValue(["uid":uid, "name":name, "email":email, "username":username])
+                self.performSegue(withIdentifier: "signUpToFeed", sender: self)}
+            else {
+            let alert = self.createAlert(warning: error!.localizedDescription)
+                self.present(alert, animated: true, completion: nil)
+            }
+        })
+    }
+    
+    func createAlert(warning: String) -> UIAlertController {
+        let alert = UIAlertController(title: "Warning:", message: warning, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        return alert
     }
     
     @objc func toLogin() {

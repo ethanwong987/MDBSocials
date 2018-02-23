@@ -56,7 +56,7 @@
                         <viewLayoutGuide key="safeArea" id="PlD-wz-Rea"/>
                     </view>
                     <connections>
-                        <segue destination="sMX-P9-8CR" kind="show" id="gV1-IO-S9z"/>
+                        <segue destination="sMX-P9-8CR" kind="show" identifier="signUpToFeed" id="gV1-IO-S9z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W6y-jk-dOa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -77,12 +77,12 @@
                     <connections>
                         <segue destination="m8A-d7-yvA" kind="show" identifier="toDetails" id="AA3-Mc-eL5"/>
                         <segue destination="zdq-Fn-Ehy" kind="presentation" identifier="toNewSocial" id="wVI-yh-Aen"/>
-                        <segue destination="zdq-Fn-Ehy" kind="show" identifier="toNewSocial" id="wxE-la-2d9"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="toLogin" id="MbR-9m-srU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BbE-Ug-zbE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1658" y="177"/>
+            <point key="canvasLocation" x="1642" y="177"/>
         </scene>
         <!--DetailVC-->
         <scene sceneID="6f3-cM-YhW">
@@ -116,7 +116,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wxE-la-2d9"/>
-        <segue reference="gV1-IO-S9z"/>
+        <segue reference="0YB-lj-ZXM"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Firebase
 
-var interestCount: Int = 0
+var interestCount : Int! = 0
 class DetailVC: UIViewController {
     var eventPic: UIImageView!
     var eventPosters: UILabel!
@@ -21,6 +22,7 @@ class DetailVC: UIViewController {
     var viewTitle: UILabel!
     let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
     var isSelected = false
+    var currPost: Post!
     var picker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -41,7 +43,7 @@ class DetailVC: UIViewController {
         view.backgroundColor = MDBColor
         
         viewTitle = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.12, width: vfw-30, height: vfh*0.1))
-        viewTitle.text = "Time and Date"
+        viewTitle.text = currPost.date! + "  " + currPost.time!
         viewTitle.textColor = .white
         viewTitle.font = UIFont(name:"HelveticaNeue", size: 24)
         
@@ -70,7 +72,7 @@ class DetailVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         eventPosters = UILabel(frame: CGRect(x: vfw*0.08, y: vfh * 0.9, width: vfw-50, height: vfh*0.1))
-        eventPosters.text = "Created By: Ethan Wong"
+        eventPosters.text = "Created By: \(currPost.poster!)"
         eventPosters.textColor = .black
         view.addSubview(eventPosters)
     }
@@ -80,7 +82,7 @@ class DetailVC: UIViewController {
         let vfh = view.frame.height
         eventTitle = UILabel(frame: CGRect(x: vfw*0.08, y: vfh * 0.58, width: vfw-50, height: vfh*0.1))
         eventTitle.font = UIFont(name: "HelveticaNeue", size: 40)
-        eventTitle.text = "Infosession"
+        eventTitle.text = currPost.postTitle
         eventTitle.textColor = .white
         view.addSubview(eventTitle)
     }
@@ -95,7 +97,7 @@ class DetailVC: UIViewController {
         view.addSubview(textBox)
         
         desc = UITextView(frame: CGRect(x: vfw*0.12, y: vfh*0.7, width: vfw-90, height: vfw*0.18))
-        desc.text = "This is a description. This is a description.This is a description.This is a description. This is a description. This is a description. This is a description. This is a description."
+        desc.text = currPost.text
         view.addSubview(desc)
     }
     
@@ -125,17 +127,21 @@ class DetailVC: UIViewController {
         interestButton.clipsToBounds = true
         interestButton.layer.borderColor = UIColor.white.cgColor
         interestButton.layer.borderWidth = 1
-        interestButton.addTarget(self, action: #selector(userInterested), for: .touchUpInside)
+        interestButton.addTarget(self, action: #selector(userIsInterested), for: .touchUpInside)
         view.addSubview(interestButton)
     }
     
-    @objc func userInterested(_ sender: UIButton) {
+    @objc func userIsInterested(_ sender: UIButton) {
         if sender.backgroundColor == .green {
             sender.backgroundColor = .clear
-            interestCount -= 1
+            interestCount! -= 1
         } else {
             sender.backgroundColor = .green
-            interestCount += 1
+            interestCount! += 1
         }
+        
+        currPost.userInterested()
+        interestLabel.text = String(interestCount)
+        
     }
 }

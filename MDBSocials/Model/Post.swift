@@ -16,15 +16,21 @@ class Post {
     var imageUrl: String?
     var posterId: String?
     var poster: String?
-    var numInterested: String?
+    var numInterested: Int?
     var id: String?
     var image: UIImage?
+    var date: String?
+    var time: String?
+    var postTitle: String?
     
     
     init(id: String, postDict: [String:Any]?) {
         self.id = id
         if postDict != nil {
-            if let numInterested = postDict!["numInterested"] as? String {
+            if let postTitle = postDict!["postTitle"] as? String {
+                self.postTitle = postTitle
+            }
+            if let numInterested = postDict!["numInterested"] as? Int {
                 self.numInterested = numInterested
             }
             if let text = postDict!["text"] as? String {
@@ -32,6 +38,12 @@ class Post {
             }
             if let imageUrl = postDict!["imageUrl"] as? String {
                 self.imageUrl = imageUrl
+            }
+            if let date = postDict!["date"] as? String {
+                self.date = date
+            }
+            if let time = postDict!["time"] as? String {
+                self.time = time
             }
             if let posterId = postDict!["posterId"] as? String {
                 self.posterId = posterId
@@ -42,15 +54,7 @@ class Post {
         }
     }
     
-    init() {
-        self.text = "By: Ethan Wong"
-        self.numInterested = "7"
-        self.imageUrl = "https://cmgajcmusic.files.wordpress.com/2016/06/kanye-west2.jpg"
-        self.id = "1"
-        self.poster = "Info Session"
-    }
-    
-    func getProfilePic(withBlock: @escaping () -> ()) {
+    func getImage(withBlock: @escaping () -> ()) {
         //TODO: Get User's profile picture
         let ref = Storage.storage().reference().child("/profilepics/\(posterId!)")
         ref.getData(maxSize: 1 * 2048 * 2048) { data, error in
@@ -61,6 +65,19 @@ class Post {
                 withBlock()
             }
         }
+    }
+    
+    func updateNumInterested() {
+        self.numInterested! += 1
+        //update numinterested
+    }
+    
+    @objc func userInterested() {
+        let postsRef = Database.database().reference().child("Posts")
+        
+        let childUpdates = ["\(self.id!)/numInterested": interestCount]
+        postsRef.updateChildValues(childUpdates)
+        
     }
 }
 

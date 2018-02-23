@@ -23,7 +23,7 @@ class Users {
                 self.name = name
             }
             if let username = userDict!["username"] as? String {
-                self.name = username
+                self.username = username
             }
             if let password = userDict!["password"] as? String {
                 self.password = password
