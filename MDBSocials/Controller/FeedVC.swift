@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import ChameleonFramework
 
 class FeedVC: UIViewController {
     var posts: [Post] = []
@@ -19,27 +20,35 @@ class FeedVC: UIViewController {
     var currentUser: Users?
     var currPost: Post!
     var navBar: UINavigationBar!
-    let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         activityIndicator.startAnimating()
-        setUpNavBar()
-        setUpCollectionView()
-        getAndChangePosts()
+        FBFunctions.getUser { (user) in
+            self.currentUser = user
+            self.setUpNavBar()
+            self.setUpCollectionView()
+            self.getPosts()
+            self.changePosts()
+        }
         activityIndicator.stopAnimating()
-    
+        
     }
     
-    func getAndChangePosts() {
+    func getPosts() {
         let ref = Database.database().reference()
         ref.child("Posts").observe(.childAdded, with: { (snapshot) in
-            let post = Post(id: snapshot.key, postDict: snapshot.value as! [String : Any]?)
-            self.posts.insert(post, at: 0)
-            self.postView.reloadData()
-        
+            let newPost = Post(id: snapshot.key, postDict: snapshot.value as! [String : Any]?)
+            newPost.getImage(withBlock: {
+                self.posts.insert(newPost, at: 0)
+                self.postView.reloadData()
+            })
         })
+    }
+    
+    func changePosts() {
+        let ref = Database.database().reference()
         ref.child("Posts").observe(.childChanged, with: { (snapshot) in
             self.postView.reloadData()
         })
@@ -47,9 +56,9 @@ class FeedVC: UIViewController {
     
     func setUpNavBar(){
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Event", style: .plain, target: self, action: #selector(toNewSocial))
-        self.navigationItem.rightBarButtonItem?.tintColor = .orange
+        self.navigationItem.rightBarButtonItem?.tintColor = Constants.MDBOrange
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut))
-        self.navigationItem.leftBarButtonItem?.tintColor = .orange
+        self.navigationItem.leftBarButtonItem?.tintColor = Constants.MDBOrange
         self.title = "Your Feed"
     }
     
@@ -69,7 +78,7 @@ class FeedVC: UIViewController {
         postView.delegate = self
         postView.dataSource = self
         postView.register(FeedViewCell.self, forCellWithReuseIdentifier: "post")
-        postView.backgroundColor = MDBColor
+        postView.backgroundColor = Constants.MDBBlue
         view.addSubview(postView)
     }
     
@@ -77,6 +86,7 @@ class FeedVC: UIViewController {
         if segue.identifier == "toDetails" {
             let detailVC = segue.destination as! DetailVC
             detailVC.currPost = currPost
+            detailVC.currUser = currentUser!
         }
     }
     
@@ -93,13 +103,21 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "post", for: indexPath) as! FeedViewCell
-        cell.awakeFromNib()
-        let postInQuestion = posts[indexPath.row]
-        cell.postText.text = postInQuestion.text
-        cell.posterText.text = postInQuestion.poster
-        cell.numInterested.text = String(describing: postInQuestion.numInterested!)
-        cell.dateText.text = postInQuestion.date
-        cell.timeText.text = postInQuestion.time
+        let currentPost = posts[indexPath.row]
+        
+        cell.setupEventText()
+        cell.setUpNumInterested()
+        cell.setupEventPoster()
+        cell.setupEventImage()
+        cell.createDateText()
+        cell.createTimeText()
+        
+        cell.postTextName = currentPost.text
+        cell.posterTextName = currentPost.poster
+        cell.numInterestedName = String(describing: currentPost.numInterested.count)
+        cell.dateTextName = currentPost.date
+        cell.timeTextName = currentPost.time
+        cell.image = currentPost.image
         cell.layer.borderWidth = 1.0
         cell.layer.masksToBounds = true
         cell.layer.shadowColor = UIColor.lightGray.cgColor
@@ -109,6 +127,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         cell.layer.masksToBounds = false
         cell.layer.cornerRadius = 10
         cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.layer.cornerRadius).cgPath
+        cell.awakeFromNib()
         return cell
     }
     

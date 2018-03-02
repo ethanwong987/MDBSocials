@@ -9,6 +9,7 @@
 import UIKit
 import SkyFloatingLabelTextField
 import Firebase
+import ChameleonFramework
 
 class SignUpVC: UIViewController {
     var fullname: SkyFloatingLabelTextField!
@@ -20,9 +21,7 @@ class SignUpVC: UIViewController {
     var borderBox: UILabel!
     var signUpButton: UIButton!
     var backToLogin: UIButton!
-    var profileImage: UIButton!
-    let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
-    
+    var profileImage: UIButton!    
     var picker = UIImagePickerController()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +37,12 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         fullname = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.4, width: vfw - 60, height: 45))
-        fullname.lineColor = .orange
-        fullname.selectedTitleColor = .orange
-        fullname.selectedLineColor = .orange
-        fullname.tintColor = .orange
+        fullname.lineColor = Constants.MDBOrange!
+        fullname.selectedTitleColor = Constants.MDBOrange!
+        fullname.selectedLineColor = Constants.MDBOrange!
+        fullname.tintColor = Constants.MDBOrange
         fullname.placeholder = "Full Name"
-        fullname.placeholderColor = .orange
+        fullname.placeholderColor = Constants.MDBOrange!
         view.addSubview(fullname)
     }
     
@@ -51,12 +50,12 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         userName = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.5, width: vfw - 60, height: 45))
-        userName.lineColor = .orange
-        userName.selectedTitleColor = .orange
-        userName.selectedLineColor = .orange
-        userName.tintColor = .orange
+        userName.lineColor = Constants.MDBOrange!
+        userName.selectedTitleColor = Constants.MDBOrange!
+        userName.selectedLineColor = Constants.MDBOrange!
+        userName.tintColor = Constants.MDBOrange
         userName.placeholder = "Username"
-        userName.placeholderColor = .orange
+        userName.placeholderColor = Constants.MDBOrange!
         view.addSubview(userName)
     }
     
@@ -65,11 +64,11 @@ class SignUpVC: UIViewController {
         let vfh = view.frame.height
         passWord = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.7, width:
             vfw - 60, height: 45))
-        passWord.lineColor = .orange
-        passWord.selectedTitleColor = .orange
-        passWord.selectedLineColor = .orange
+        passWord.lineColor = Constants.MDBOrange!
+        passWord.selectedTitleColor = Constants.MDBOrange!
+        passWord.selectedLineColor = Constants.MDBOrange!
         passWord.placeholder = "Password"
-        passWord.placeholderColor = .orange
+        passWord.placeholderColor = Constants.MDBOrange!
         view.addSubview(passWord)
     }
     
@@ -77,12 +76,12 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         emailText = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.6, width: vfw - 60, height: 45))
-        emailText.lineColor = .orange
-        emailText.selectedTitleColor = .orange
-        emailText.selectedLineColor = .orange
-        emailText.tintColor = .orange
+        emailText.lineColor = Constants.MDBOrange!
+        emailText.selectedTitleColor = Constants.MDBOrange!
+        emailText.selectedLineColor = Constants.MDBOrange!
+        emailText.tintColor = Constants.MDBOrange
         emailText.placeholder = "Email"
-        emailText.placeholderColor = .orange
+        emailText.placeholderColor = Constants.MDBOrange!
         view.addSubview(emailText)
     }
     
@@ -90,7 +89,7 @@ class SignUpVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         
-        view.backgroundColor = MDBColor
+        view.backgroundColor = Constants.MDBBlue
         borderBox = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.38, width: vfw-30, height: vfh * 0.55))
         borderBox.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         borderBox.layer.masksToBounds = true
@@ -114,13 +113,13 @@ class SignUpVC: UIViewController {
         
         signUpButton = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.81, width: vfw - 50, height: 40))
         signUpButton.setTitle("Create Account", for: .normal)
-        signUpButton.backgroundColor = .orange
+        signUpButton.backgroundColor = Constants.MDBOrange
         signUpButton.addTarget(self, action: #selector(signUpToFeed), for: .touchUpInside)
         signUpButton.layer.cornerRadius = 10
         
         backToLogin = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.87, width: vfw - 50, height: 40))
         backToLogin.setTitle("Back To Login", for: .normal)
-        backToLogin.setTitleColor(MDBColor, for: .normal)
+        backToLogin.setTitleColor(Constants.MDBBlue, for: .normal)
         backToLogin.addTarget(self, action: #selector(toLogin), for: .touchUpInside)
         
         view.addSubview(backToLogin)

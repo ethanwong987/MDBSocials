@@ -8,8 +8,8 @@
 
 import UIKit
 import Firebase
+import ChameleonFramework
 
-var interestCount : Int! = 0
 class DetailVC: UIViewController {
     var eventPic: UIImageView!
     var eventPosters: UILabel!
@@ -20,9 +20,9 @@ class DetailVC: UIViewController {
     var textBox: UILabel!
     var desc: UITextView!
     var viewTitle: UILabel!
-    let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
     var isSelected = false
     var currPost: Post!
+    var currUser: Users!
     var picker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class DetailVC: UIViewController {
     func setUpUI(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        view.backgroundColor = MDBColor
+        view.backgroundColor = Constants.MDBBlue
         
         viewTitle = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.12, width: vfw-30, height: vfh*0.1))
         viewTitle.text = currPost.date! + "  " + currPost.time!
@@ -59,7 +59,11 @@ class DetailVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         eventPic = UIImageView(frame: CGRect(x: vfw*0.04, y: vfh*0.2, width: vfw-30, height: vfh*0.35))
-        eventPic.image = UIImage(named:"default-image")
+        if currPost.image == nil {
+            eventPic.image = UIImage(named:"default-image")
+        } else {
+            eventPic.image = currPost.image
+        }
         eventPic.layer.borderWidth = 1
         eventPic.layer.masksToBounds = false
         eventPic.layer.borderColor = UIColor.black.cgColor
@@ -112,7 +116,7 @@ class DetailVC: UIViewController {
         view.addSubview(interestTextView)
         
         interestLabel = UILabel(frame: CGRect(x: vfw*0.76, y: vfh*0.82, width: vfw*0.1, height: vfh*0.16))
-        interestLabel.text = String(interestCount)
+        interestLabel.text = String(describing: currPost.numInterested.count)
         interestLabel.font = UIFont(name: "HelveticaNeue", size: 35)
         view.addSubview(interestLabel)
     }
@@ -127,6 +131,9 @@ class DetailVC: UIViewController {
         interestButton.clipsToBounds = true
         interestButton.layer.borderColor = UIColor.white.cgColor
         interestButton.layer.borderWidth = 1
+        if currPost.numInterested.contains(currUser.id!) {
+            interestButton.backgroundColor = .green
+        }
         interestButton.addTarget(self, action: #selector(userIsInterested), for: .touchUpInside)
         view.addSubview(interestButton)
     }
@@ -134,14 +141,22 @@ class DetailVC: UIViewController {
     @objc func userIsInterested(_ sender: UIButton) {
         if sender.backgroundColor == .green {
             sender.backgroundColor = .clear
-            interestCount! -= 1
+            var index = 0
+            for id in currPost.numInterested {
+                if currUser.id == id {
+                    currPost.numInterested.remove(at: index)
+                    let postRef = Database.database().reference().child("Posts").child(currPost.id!)
+                    postRef.updateChildValues(["numInterested" : currPost.numInterested])
+                } else {
+                    index += 1
+                }
+            }
         } else {
             sender.backgroundColor = .green
-            interestCount! += 1
+            currPost.numInterested.append(currUser.id!)
+            let ref = Database.database().reference().child("Posts").child(currPost.id!)
+            ref.updateChildValues(["numInterested" : currPost.numInterested])
         }
-        
-        currPost.userInterested()
-        interestLabel.text = String(interestCount)
-        
+        interestLabel.text = String(describing: currPost.numInterested.count)
     }
 }

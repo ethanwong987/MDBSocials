@@ -33,13 +33,5 @@ class Users {
             }
         }
     }
-    
-    static func getCurrentUser(withId: String, block: @escaping (Users) -> ()) {
-        FBFunctions.fetchUser(id: withId, withBlock: {(user) in
-            block(user)
-        })
-    }
-    
-    
 }
 

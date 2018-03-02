@@ -27,15 +27,16 @@ class FBFunctions {
         })
     }
     
-    static func fetchUser(id: String, withBlock: @escaping (Users) -> ()) {
-        //TODO: Implement a method to fetch posts with Firebase!
+    static func getUser(withBlock: @escaping (Users) -> ()) {
         let ref = Database.database().reference()
-        ref.child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("Users").child((Auth.auth().currentUser?.uid)!).observeSingleEvent(of: .value, with: { (snapshot) in
             let user = Users(id: snapshot.key, userDict: snapshot.value as! [String : Any]?)
-            withBlock(user)
-            
+            DispatchQueue.main.async {
+                withBlock(user)
+            }
         })
     }
+    
     static func createNewUser(id: String, name: String, email: String) {
         let usersRef = Database.database().reference().child("Users")
         let newUser = ["name": name, "email": email]

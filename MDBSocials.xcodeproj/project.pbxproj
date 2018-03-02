@@ -24,6 +24,7 @@
 		6B990463203CC6DD00EB5C4A /* FeedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B990462203CC6DD00EB5C4A /* FeedViewCell.swift */; };
 		6B990466203CC72600EB5C4A /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B990465203CC72600EB5C4A /* UserAuth.swift */; };
 		6B990468203CC76700EB5C4A /* FBFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B990467203CC76700EB5C4A /* FBFunctions.swift */; };
+		6BC55553204927D8001C41A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC55552204927D8001C41A6 /* Constants.swift */; };
 		B00B957057FBAF19B456D0C1 /* Pods_MDBSocialsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19318B7D3E630423AC3747 /* Pods_MDBSocialsUITests.framework */; };
 		C19CD4064909F4B031B9DCF5 /* Pods_MDBSocialsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2247429F93DE6F5AD2E1A39D /* Pods_MDBSocialsTests.framework */; };
 		C9DD4D5590DD48012B2185C2 /* Pods_MDBSocials.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA40845BED7B41BCF59F99B8 /* Pods_MDBSocials.framework */; };
@@ -73,6 +74,7 @@
 		6B990462203CC6DD00EB5C4A /* FeedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewCell.swift; sourceTree = "<group>"; };
 		6B990465203CC72600EB5C4A /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
 		6B990467203CC76700EB5C4A /* FBFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBFunctions.swift; sourceTree = "<group>"; };
+		6BC55552204927D8001C41A6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		83CE4BB727171F2780BA6067 /* Pods-MDBSocialsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDBSocialsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDBSocialsTests/Pods-MDBSocialsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8422BC048DD5955DCADB6644 /* Pods-MDBSocialsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDBSocialsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MDBSocialsUITests/Pods-MDBSocialsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8941E71B2472A5ECEB04FB5A /* Pods-MDBSocialsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDBSocialsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDBSocialsUITests/Pods-MDBSocialsUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		6B99041F203BFC1F00EB5C4A /* MDBSocials */ = {
 			isa = PBXGroup;
 			children = (
+				6BC555512049276E001C41A6 /* Lib */,
 				6B990464203CC6EE00EB5C4A /* FireBase */,
 				6B990459203C536100EB5C4A /* View */,
 				6B99045A203C536E00EB5C4A /* Model */,
@@ -202,6 +205,14 @@
 				6B990467203CC76700EB5C4A /* FBFunctions.swift */,
 			);
 			path = FireBase;
+			sourceTree = "<group>";
+		};
+		6BC555512049276E001C41A6 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				6BC55552204927D8001C41A6 /* Constants.swift */,
+			);
+			path = Lib;
 			sourceTree = "<group>";
 		};
 		AB4F0F40E8900B871633F371 /* Pods */ = {
@@ -473,9 +484,23 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MDBSocials/Pods-MDBSocials-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/DGActivityIndicatorView/DGActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/HanekeSwift/Haneke.framework",
+				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
+				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TLFloatLabelTextField/TLFloatLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/TweeTextField/TweeTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -483,9 +508,23 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DGActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haneke.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TLFloatLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweeTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -544,6 +583,7 @@
 				6B990452203C526900EB5C4A /* SignUpVC.swift in Sources */,
 				6B990421203BFC1F00EB5C4A /* AppDelegate.swift in Sources */,
 				6B99045E203C548300EB5C4A /* Users.swift in Sources */,
+				6BC55553204927D8001C41A6 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

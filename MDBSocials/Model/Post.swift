@@ -16,7 +16,7 @@ class Post {
     var imageUrl: String?
     var posterId: String?
     var poster: String?
-    var numInterested: Int?
+    var numInterested: [String] = []
     var id: String?
     var image: UIImage?
     var date: String?
@@ -30,7 +30,7 @@ class Post {
             if let postTitle = postDict!["postTitle"] as? String {
                 self.postTitle = postTitle
             }
-            if let numInterested = postDict!["numInterested"] as? Int {
+            if let numInterested = postDict!["numInterested"] as? [String] {
                 self.numInterested = numInterested
             }
             if let text = postDict!["text"] as? String {
@@ -56,28 +56,15 @@ class Post {
     
     func getImage(withBlock: @escaping () -> ()) {
         //TODO: Get User's profile picture
-        let ref = Storage.storage().reference().child("/profilepics/\(posterId!)")
+        let ref = Storage.storage().reference().child("/Posts/\(id!)")
         ref.getData(maxSize: 1 * 2048 * 2048) { data, error in
-            if let error = error {
+            if error != nil {
                 print(error)
             } else {
                 self.image = UIImage(data: data!)
-                withBlock()
             }
+            withBlock()
         }
-    }
-    
-    func updateNumInterested() {
-        self.numInterested! += 1
-        //update numinterested
-    }
-    
-    @objc func userInterested() {
-        let postsRef = Database.database().reference().child("Posts")
-        
-        let childUpdates = ["\(self.id!)/numInterested": interestCount]
-        postsRef.updateChildValues(childUpdates)
-        
     }
 }
 

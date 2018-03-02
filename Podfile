@@ -9,7 +9,20 @@ pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Firebase/Auth'
-
+pod 'ChameleonFramework/Swift'
+pod 'Spring'
+pod ‘HanekeSwift’, :git => ’https://github.com/Haneke/HanekeSwift.git', :branch => ‘feature/swift-3’
+pod 'Alamofire', '~> 4.0'
+pod 'SwiftyJSON'
+pod 'JGProgressHUD'
+pod 'DGActivityIndicatorView'
+pod "FBSDKShareKit", "~>4.10.0"
+pod 'FBSDKCoreKit', :podspec => 'https://raw.githubusercontent.com/chrisp-fb/facebook-ios-sdk/master/FBSDKCoreKit.podspec'
+pod "FBSDKLoginKit", "~>4.10.0"
+pod "PromiseKit", "~> 4.0"
+pod 'PromiseKit/Alamofire'
+pod 'ObjectMapper'
+pod 'SwiftyBeaver'
 pod 'TLFloatLabelTextField'
 pod 'TweeTextField'
 pod 'SkyFloatingLabelTextField', '~> 3.0'

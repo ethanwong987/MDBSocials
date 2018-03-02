@@ -9,6 +9,7 @@
 import UIKit
 import SkyFloatingLabelTextField
 import Firebase
+import ChameleonFramework
 
 class LoginVC: UIViewController {
     var emailText: SkyFloatingLabelTextField!
@@ -20,8 +21,7 @@ class LoginVC: UIViewController {
     var signUpButton: UIButton!
     var MDBLogo: UIImageView!
     var MDBTitle: UILabel!
-    let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
-    var backgroundColours = [UIColor.lightGray, UIColor.orange, UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)]
+    var backgroundColours = [UIColor.lightGray, Constants.MDBOrange, UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)]
     var backgroundLoop = 0
     
     override func viewDidLoad() {
@@ -65,28 +65,28 @@ class LoginVC: UIViewController {
         let vfw = view.frame.width
         let vfh = view.frame.height
         
-        view.backgroundColor = MDBColor
+        view.backgroundColor = Constants.MDBBlue
         borderBox = UILabel(frame: CGRect(x: vfw*0.04, y: vfh*0.58, width: vfw-30, height: 260))
         borderBox.backgroundColor = UIColor.white.withAlphaComponent(0.6)
         borderBox.layer.masksToBounds = true
         borderBox.layer.cornerRadius = 10
         
         emailText = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.6, width: vfw - 60, height: 45))
-        emailText.lineColor = .orange
-        emailText.selectedTitleColor = .orange
-        emailText.selectedLineColor = .orange
-        emailText.tintColor = .orange
+        emailText.lineColor = Constants.MDBOrange!
+        emailText.selectedTitleColor = Constants.MDBOrange!
+        emailText.selectedLineColor = Constants.MDBOrange!
+        emailText.tintColor = Constants.MDBOrange
 
         passWord = SkyFloatingLabelTextField(frame: CGRect(x: vfw * 0.07, y: vfh*0.7, width:
            vfw - 60, height: 45))
-        passWord.lineColor = .orange
-        passWord.selectedTitleColor = .orange
-        passWord.selectedLineColor = .orange
+        passWord.lineColor = Constants.MDBOrange!
+        passWord.selectedTitleColor = Constants.MDBOrange!
+        passWord.selectedLineColor = Constants.MDBOrange!
         
         emailText.placeholder = "Email"
-        emailText.placeholderColor = .orange
+        emailText.placeholderColor = Constants.MDBOrange!
         passWord.placeholder = "Password"
-        passWord.placeholderColor = .orange
+        passWord.placeholderColor = Constants.MDBOrange!
         
         view.addSubview(borderBox)
         view.addSubview(emailText)
@@ -96,16 +96,15 @@ class LoginVC: UIViewController {
     func createButtons() {
         let vfw = view.frame.width
         let vfh = view.frame.height
-        let MDBColor = UIColor(red:0.16, green:0.73, blue:1.00, alpha:1.0)
         loginButton = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.81, width: vfw - 50, height: 40))
         loginButton.setTitle("Login", for: .normal)
-        loginButton.backgroundColor = .orange
+        loginButton.backgroundColor = Constants.MDBOrange
         loginButton.addTarget(self, action: #selector(logInToFeed), for: .touchUpInside)
         loginButton.layer.cornerRadius = 10
         
         signUpButton = UIButton(frame: CGRect(x: vfw * 0.07, y: vfh * 0.88, width: vfw - 50, height: 40))
         signUpButton.setTitle("Sign Up", for: .normal)
-        signUpButton.backgroundColor = MDBColor
+        signUpButton.backgroundColor = Constants.MDBBlue
         signUpButton.addTarget(self, action: #selector(toSignUp), for: .touchUpInside)
         signUpButton.layer.cornerRadius = 10
         
